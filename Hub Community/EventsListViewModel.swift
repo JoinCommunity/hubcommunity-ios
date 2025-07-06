@@ -8,9 +8,9 @@ public class EventsListViewModel: ObservableObject {
     @Published public private(set) var isLoading: Bool = false
     @Published public private(set) var errorMessage: String? = nil
 
-    private let manager: EnhancedEventsManagerProtocol
+    private let manager: EventsManagerProtocol
 
-    public init(manager: EnhancedEventsManagerProtocol = EnhancedEventsManager()) {
+    public init(manager: EventsManagerProtocol = EventsManager()) {
         self.manager = manager
     }
 
