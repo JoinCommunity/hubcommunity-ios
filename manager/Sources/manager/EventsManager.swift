@@ -31,7 +31,8 @@ public class EventsManager: EventsManagerProtocol, @unchecked Sendable {
 
     /// Fetches events directly from the API without caching
     public func fetchEvents() async throws -> [Event] {
-        try await eventsService.getEvents()
+        let eventDtos = try await eventsService.getEvents()
+        return EventsMapper.map(eventDtos)
     }
 
     /// Fetches events with cache-first strategy
@@ -90,17 +91,17 @@ public class EventsManagerFactory {
         return EventsManager(eventsService: eventsService, storageService: storageService)
     }
 
-    public static func createMockManager(
-        mockEvents: [Event] = [],
-        shouldThrowError: Bool = false,
-        mockError: Error = GraphQLError.noData
-    ) -> EventsManagerProtocol {
-        let mockEventsService = EventsServiceFactory.createMockService(
-            mockEvents: mockEvents,
-            shouldThrowError: shouldThrowError,
-            mockError: mockError
-        )
-        let mockStorageService = MockStorageService()
-        return EventsManager(eventsService: mockEventsService, storageService: mockStorageService)
-    }
+//    public static func createMockManager(
+//        mockEvents: [Event] = [],
+//        shouldThrowError: Bool = false,
+//        mockError: Error = GraphQLError.noData
+//    ) -> EventsManagerProtocol {
+//        let mockEventsService = EventsServiceFactory.createMockService(
+//            mockEvents: mockEvents,
+//            shouldThrowError: shouldThrowError,
+//            mockError: mockError
+//        )
+//        let mockStorageService = MockStorageService()
+//        return EventsManager(eventsService: mockEventsService, storageService: mockStorageService)
+//    }
 }

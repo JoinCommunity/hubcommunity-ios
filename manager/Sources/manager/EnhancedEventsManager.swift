@@ -47,7 +47,8 @@ public class EnhancedEventsManager: EnhancedEventsManagerProtocol, @unchecked Se
     // MARK: - Basic Operations
 
     public func fetchEvents() async throws -> [Event] {
-        try await eventsService.getEvents()
+        let eventDtos = try await eventsService.getEvents()
+        return EventsMapper.map(eventDtos)
     }
 
     public func fetchEventsWithCache() async throws -> [Event] {
@@ -147,17 +148,17 @@ public class EnhancedEventsManagerFactory {
         return EnhancedEventsManager(eventsService: eventsService, storageService: storageService)
     }
 
-    public static func createMockManager(
-        mockEvents: [Event] = [],
-        shouldThrowError: Bool = false,
-        mockError: Error = GraphQLError.noData
-    ) -> EnhancedEventsManagerProtocol {
-        let mockEventsService = EventsServiceFactory.createMockService(
-            mockEvents: mockEvents,
-            shouldThrowError: shouldThrowError,
-            mockError: mockError
-        )
-        let mockStorageService = MockStorageService()
-        return EnhancedEventsManager(eventsService: mockEventsService, storageService: mockStorageService)
-    }
+//    public static func createMockManager(
+//        mockEvents: [Event] = [],
+//        shouldThrowError: Bool = false,
+//        mockError: Error = GraphQLError.noData
+//    ) -> EnhancedEventsManagerProtocol {
+//        let mockEventsService = EventsServiceFactory.createMockService(
+//            mockEvents: mockEvents,
+//            shouldThrowError: shouldThrowError,
+//            mockError: mockError
+//        )
+//        let mockStorageService = MockStorageService()
+//        return EnhancedEventsManager(eventsService: mockEventsService, storageService: mockStorageService)
+//    }
 }

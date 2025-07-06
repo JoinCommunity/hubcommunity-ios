@@ -8,19 +8,19 @@ final class EventsManagerTests: XCTestCase {
 
     func testFetchEvents() async throws {
         // Given
-        let mockEvents = [
-            Event(
+        let mockEventDtos = [
+            EventDto(
                 id: "1",
                 title: "Test Event",
-                tags: [Tag(id: "1", value: "Swift")],
-                talks: [Talk(id: "1", title: "Test Talk")],
-                location: Location(id: "1", title: "Test Location"),
+                tags: [TagDto(id: "1", value: "Swift")],
+                talks: [TalkDto(id: "1", title: "Test Talk")],
+                location: LocationDto(id: "1", title: "Test Location"),
                 images: ["image1.jpg"],
-                communities: [Community(id: "1", title: "Test Community", membersQuantity: 100)]
+                communities: [CommunityDto(id: "1", title: "Test Community", membersQuantity: 100)]
             )
         ]
 
-        let mockService = EventsServiceFactory.createMockService(mockEvents: mockEvents)
+        let mockService = EventsServiceFactory.createMockService(mockEvents: mockEventDtos)
         let mockStorage = MockStorageService()
         let manager = EventsManager(eventsService: mockService, storageService: mockStorage)
 
@@ -47,7 +47,19 @@ final class EventsManagerTests: XCTestCase {
             )
         ]
 
-        let mockService = EventsServiceFactory.createMockService(mockEvents: mockEvents)
+        let mockEventDtos = [
+            EventDto(
+                id: "1",
+                title: "Test Event",
+                tags: [],
+                talks: [],
+                location: LocationDto(id: "1", title: "Test"),
+                images: [],
+                communities: []
+            )
+        ]
+
+        let mockService = EventsServiceFactory.createMockService(mockEvents: mockEventDtos)
         let mockStorage = MockStorageService()
         mockStorage.mockEvents = mockEvents
 
@@ -63,19 +75,19 @@ final class EventsManagerTests: XCTestCase {
 
     func testRefreshEvents() async throws {
         // Given
-        let mockEvents = [
-            Event(
+        let mockEventDtos = [
+            EventDto(
                 id: "1",
                 title: "Refreshed Event",
                 tags: [],
                 talks: [],
-                location: Location(id: "1", title: "Test"),
+                location: LocationDto(id: "1", title: "Test"),
                 images: [],
                 communities: []
             )
         ]
 
-        let mockService = EventsServiceFactory.createMockService(mockEvents: mockEvents)
+        let mockService = EventsServiceFactory.createMockService(mockEvents: mockEventDtos)
         let mockStorage = MockStorageService()
         let manager = EventsManager(eventsService: mockService, storageService: mockStorage)
 
@@ -133,28 +145,6 @@ final class EventsManagerTests: XCTestCase {
 
         // When
         let manager = EventsManagerFactory.createManager(baseURL: url)
-
-        // Then
-        XCTAssertNotNil(manager)
-        XCTAssertTrue(manager is EventsManager)
-    }
-
-    func testManagerFactoryCreatesMockManager() {
-        // Given
-        let mockEvents = [
-            Event(
-                id: "1",
-                title: "Test Event",
-                tags: [],
-                talks: [],
-                location: Location(id: "1", title: "Test"),
-                images: [],
-                communities: []
-            )
-        ]
-
-        // When
-        let manager = EventsManagerFactory.createMockManager(mockEvents: mockEvents)
 
         // Then
         XCTAssertNotNil(manager)

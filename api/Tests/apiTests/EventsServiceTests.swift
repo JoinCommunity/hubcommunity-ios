@@ -1,5 +1,4 @@
 @testable import api
-import models
 import XCTest
 
 final class EventsServiceTests: XCTestCase {
@@ -7,14 +6,14 @@ final class EventsServiceTests: XCTestCase {
     func testEventsServiceReturnsEvents() async throws {
         // Given
         let mockEvents = [
-            Event(
+            EventDto(
                 id: "1",
                 title: "Test Event",
-                tags: [Tag(id: "1", value: "Swift")],
-                talks: [Talk(id: "1", title: "Test Talk")],
-                location: Location(id: "1", title: "Test Location"),
+                tags: [TagDto(id: "1", value: "Swift")],
+                talks: [TalkDto(id: "1", title: "Test Talk")],
+                location: LocationDto(id: "1", title: "Test Location"),
                 images: ["image1.jpg"],
-                communities: [Community(id: "1", title: "Test Community", membersQuantity: 100)]
+                communities: [CommunityDto(id: "1", title: "Test Community", membersQuantity: 100)]
             )
         ]
 
@@ -60,12 +59,12 @@ final class EventsServiceTests: XCTestCase {
     func testEventsServiceFactoryCreatesMockService() {
         // Given
         let mockEvents = [
-            Event(
+            EventDto(
                 id: "1",
                 title: "Test Event",
                 tags: [],
                 talks: [],
-                location: Location(id: "1", title: "Test"),
+                location: LocationDto(id: "1", title: "Test"),
                 images: [],
                 communities: []
             )
