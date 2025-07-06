@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		99CF80D72E1AEE55005CEE05 /* manager in Frameworks */ = {isa = PBXBuildFile; productRef = 99CF80D62E1AEE55005CEE05 /* manager */; };
+		99CF80DC2E1AEEA4005CEE05 /* models in Frameworks */ = {isa = PBXBuildFile; productRef = 99CF80DB2E1AEEA4005CEE05 /* models */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		99CF80B52E1AED76005CEE05 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +32,11 @@
 		99CF80A52E1AED75005CEE05 /* Hub Community.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hub Community.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		99CF80B42E1AED76005CEE05 /* Hub CommunityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hub CommunityTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		99CF80BE2E1AED76005CEE05 /* Hub CommunityUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hub CommunityUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		99CF80D22E1AEDB4005CEE05 /* api */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = api; sourceTree = "<group>"; };
+		99CF80D32E1AEDCC005CEE05 /* storage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = storage; sourceTree = "<group>"; };
+		99CF80D42E1AEE04005CEE05 /* manager */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = manager; sourceTree = "<group>"; };
+		99CF80DA2E1AEE83005CEE05 /* models */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = models; sourceTree = "<group>"; };
+		99CF80DD2E1AEEB3005CEE05 /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -52,6 +62,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99CF80DC2E1AEEA4005CEE05 /* models in Frameworks */,
+				99CF80D72E1AEE55005CEE05 /* manager in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,9 +87,15 @@
 		99CF809C2E1AED75005CEE05 = {
 			isa = PBXGroup;
 			children = (
+				99CF80DD2E1AEEB3005CEE05 /* TestPlan.xctestplan */,
+				99CF80DA2E1AEE83005CEE05 /* models */,
+				99CF80D42E1AEE04005CEE05 /* manager */,
+				99CF80D32E1AEDCC005CEE05 /* storage */,
+				99CF80D22E1AEDB4005CEE05 /* api */,
 				99CF80A72E1AED75005CEE05 /* Hub Community */,
 				99CF80B72E1AED76005CEE05 /* Hub CommunityTests */,
 				99CF80C12E1AED76005CEE05 /* Hub CommunityUITests */,
+				99CF80D52E1AEE55005CEE05 /* Frameworks */,
 				99CF80A62E1AED75005CEE05 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +108,13 @@
 				99CF80BE2E1AED76005CEE05 /* Hub CommunityUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		99CF80D52E1AEE55005CEE05 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -112,6 +137,8 @@
 			);
 			name = "Hub Community";
 			packageProductDependencies = (
+				99CF80D62E1AEE55005CEE05 /* manager */,
+				99CF80DB2E1AEEA4005CEE05 /* models */,
 			);
 			productName = "Hub Community";
 			productReference = 99CF80A52E1AED75005CEE05 /* Hub Community.app */;
@@ -550,6 +577,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		99CF80D62E1AEE55005CEE05 /* manager */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = manager;
+		};
+		99CF80DB2E1AEEA4005CEE05 /* models */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = models;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 99CF809D2E1AED75005CEE05 /* Project object */;
 }

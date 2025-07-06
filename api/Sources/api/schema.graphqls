@@ -1,0 +1,38 @@
+type Query {
+  events: EventsResponse!
+}
+
+type EventsResponse {
+  data: [Event!]!
+}
+
+type Event {
+  id: ID!
+  title: String!
+  tags: [Tag!]!
+  talks: [Talk!]!
+  location: Location!
+  images: [String!]!
+  communities: [Community!]!
+}
+
+type Tag {
+  id: ID!
+  value: String!
+}
+
+type Talk {
+  id: ID!
+  title: String!
+}
+
+type Location {
+  id: ID!
+  title: String!
+}
+
+type Community {
+  id: ID!
+  title: String!
+  members_quantity: Int!
+} 

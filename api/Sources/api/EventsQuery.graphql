@@ -1,0 +1,23 @@
+query Events {
+  events {
+    data {
+      id
+      title
+      tags {
+        value
+        id
+      }
+      talks {
+        title
+      }
+      location {
+        title
+      }
+      images
+      communities {
+        members_quantity
+        title
+      }
+    }
+  }
+} 
