@@ -64,6 +64,7 @@ struct EventsListView: View {
             .navigationTitle("Events")
             .task {
                 await viewModel.loadEvents()
+                await viewModel.refreshEvents()
             }
         }
     }

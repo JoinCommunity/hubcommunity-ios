@@ -24,4 +24,13 @@ public class EventsListViewModel: ObservableObject {
         }
         isLoading = false
     }
+
+    public func refreshEvents() async {
+        errorMessage = nil
+        do {
+            events = try await manager.refreshEvents()
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
 }
