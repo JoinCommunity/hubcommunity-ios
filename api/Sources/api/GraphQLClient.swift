@@ -1,13 +1,9 @@
 import Foundation
 import models
 
-// MARK: - Protocol for testability
-
 public protocol GraphQLClientProtocol: Sendable {
     func fetchEvents() async throws -> [Event]
 }
-
-// MARK: - GraphQL Client Implementation
 
 public class GraphQLClient: GraphQLClientProtocol, @unchecked Sendable {
     private let baseURL: URL
@@ -76,34 +72,34 @@ public class GraphQLClient: GraphQLClientProtocol, @unchecked Sendable {
             ))
         }
 
-        let graphQLResponse = try JSONDecoder().decode(GraphQLResponse.self, from: data)
+        let graphQLResponse = try JSONDecoder().decode(GraphQLResponse<EventsQueryDto>.self, from: data)
 
-        guard let eventsData = graphQLResponse.data?.events?.data else {
+        guard let eventsDto = graphQLResponse.data?.events?.data else {
             throw GraphQLError.noData
         }
 
-        return eventsData.compactMap { eventData -> Event? in
+        return eventsDto.compactMap { eventDto -> Event? in
             guard
-                let id = eventData.id,
-                let title = eventData.title
+                let id = eventDto.id,
+                let title = eventDto.title
             else {
                 return nil
             }
 
-            let tags = eventData.tags?.compactMap { tagData -> Tag? in
+            let tags = eventDto.tags?.compactMap { tagDto -> Tag? in
                 guard
-                    let tagId = tagData.id,
-                    let value = tagData.value
+                    let tagId = tagDto.id,
+                    let value = tagDto.value
                 else {
                     return nil
                 }
                 return Tag(id: tagId, value: value)
             } ?? []
 
-            let talks = eventData.talks?.compactMap { talkData -> Talk? in
+            let talks = eventDto.talks?.compactMap { talkDto -> Talk? in
                 guard
-                    let talkId = talkData.id,
-                    let talkTitle = talkData.title
+                    let talkId = talkDto.id,
+                    let talkTitle = talkDto.title
                 else {
                     return nil
                 }
@@ -111,23 +107,23 @@ public class GraphQLClient: GraphQLClientProtocol, @unchecked Sendable {
             } ?? []
 
             let location = Location(
-                id: eventData.location?.id ?? "",
-                title: eventData.location?.title ?? ""
+                id: eventDto.location?.id ?? "",
+                title: eventDto.location?.title ?? ""
             )
 
-            let images = eventData.images ?? []
+            let images = eventDto.images ?? []
 
-            let communities = eventData.communities?.compactMap { communityData -> Community? in
+            let communities = eventDto.communities?.compactMap { communityDto -> Community? in
                 guard
-                    let communityId = communityData.id,
-                    let communityTitle = communityData.title
+                    let communityId = communityDto.id,
+                    let communityTitle = communityDto.title
                 else {
                     return nil
                 }
                 return Community(
                     id: communityId,
                     title: communityTitle,
-                    membersQuantity: communityData.membersQuantity ?? 0
+                    membersQuantity: communityDto.membersQuantity ?? 0
                 )
             } ?? []
 
@@ -143,8 +139,6 @@ public class GraphQLClient: GraphQLClientProtocol, @unchecked Sendable {
         }
     }
 }
-
-// MARK: - Mock Client for Testing
 
 public class MockGraphQLClient: GraphQLClientProtocol, @unchecked Sendable {
     private let mockEvents: [Event]

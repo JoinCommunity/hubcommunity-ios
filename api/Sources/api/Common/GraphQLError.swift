@@ -1,7 +1,5 @@
 import Foundation
 
-// MARK: - Custom Errors
-
 public enum GraphQLError: LocalizedError, Sendable, Equatable {
     case noData
     case networkError(Error)

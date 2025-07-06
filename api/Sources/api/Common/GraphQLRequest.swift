@@ -1,13 +1,11 @@
 import Foundation
 
-// MARK: - GraphQL Request Models
-
 struct GraphQLRequest: Codable {
     let query: String
 }
 
-struct GraphQLResponse: Codable {
-    let data: EventsQueryData?
+struct GraphQLResponse<T: Codable>: Codable {
+    let data: T?
     let errors: [GraphQLErrorResponse]?
 }
 
