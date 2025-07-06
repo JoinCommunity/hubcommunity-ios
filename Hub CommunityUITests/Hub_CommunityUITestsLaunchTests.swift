@@ -1,10 +1,3 @@
-//
-//  Hub_CommunityUITestsLaunchTests.swift
-//  Hub CommunityUITests
-//
-//  Created by Zé Net on 06/07/2025.
-//
-
 import XCTest
 
 final class Hub_CommunityUITestsLaunchTests: XCTestCase {

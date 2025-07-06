@@ -10,10 +10,12 @@ let package = Package(
         .macOS(.v12)
     ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
+        // Products define the executables and libraries a package produces, making them visible to other
+        // packages.
         .library(
             name: "storage",
-            targets: ["storage"]),
+            targets: ["storage"]
+        )
     ],
     dependencies: [
         .package(path: "../models")
@@ -23,10 +25,11 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "storage",
-            dependencies: ["models"]),
+            dependencies: ["models"]
+        ),
         .testTarget(
             name: "storageTests",
             dependencies: ["storage"]
-        ),
+        )
     ]
 )

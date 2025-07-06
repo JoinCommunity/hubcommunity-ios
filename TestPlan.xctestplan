@@ -20,26 +20,10 @@
       }
     },
     {
-      "enabled" : false,
-      "target" : {
-        "containerPath" : "container:storage",
-        "identifier" : "storageTests",
-        "name" : "storageTests"
-      }
-    },
-    {
       "target" : {
         "containerPath" : "container:api",
         "identifier" : "apiTests",
         "name" : "apiTests"
-      }
-    },
-    {
-      "enabled" : false,
-      "target" : {
-        "containerPath" : "container:models",
-        "identifier" : "modelsTests",
-        "name" : "modelsTests"
       }
     }
   ],

@@ -1,21 +1,15 @@
-//
-//  EventsBusinessLogic.swift
-//  manager
-//
-//  Created by Zé Net on 06/07/2025.
-//
-
 import Foundation
 import models
 
 // MARK: - Event Filtering Options
+
 public struct EventFilterOptions: Sendable {
     public let searchTerm: String?
     public let tags: [String]?
     public let communities: [String]?
     public let hasTalks: Bool?
     public let hasImages: Bool?
-    
+
     public init(
         searchTerm: String? = nil,
         tags: [String]? = nil,
@@ -32,6 +26,7 @@ public struct EventFilterOptions: Sendable {
 }
 
 // MARK: - Event Sorting Options
+
 public enum EventSortOption: Sendable {
     case titleAscending
     case titleDescending
@@ -42,13 +37,14 @@ public enum EventSortOption: Sendable {
 }
 
 // MARK: - Events Business Logic
+
 public class EventsBusinessLogic {
-    
+
     // MARK: - Filtering
-    
+
     /// Filters events based on the provided options
     public static func filterEvents(_ events: [Event], with options: EventFilterOptions) -> [Event] {
-        return events.filter { event in
+        events.filter { event in
             // Search term filter
             if let searchTerm = options.searchTerm, !searchTerm.isEmpty {
                 let searchLower = searchTerm.lowercased()
@@ -56,12 +52,12 @@ public class EventsBusinessLogic {
                 let matchesLocation = event.location.title.lowercased().contains(searchLower)
                 let matchesTags = event.tags.contains { $0.value.lowercased().contains(searchLower) }
                 let matchesCommunities = event.communities.contains { $0.title.lowercased().contains(searchLower) }
-                
-                if !matchesTitle && !matchesLocation && !matchesTags && !matchesCommunities {
+
+                if !matchesTitle, !matchesLocation, !matchesTags, !matchesCommunities {
                     return false
                 }
             }
-            
+
             // Tags filter
             if let tags = options.tags, !tags.isEmpty {
                 let eventTagValues = Set(event.tags.map { $0.value.lowercased() })
@@ -70,7 +66,7 @@ public class EventsBusinessLogic {
                     return false
                 }
             }
-            
+
             // Communities filter
             if let communities = options.communities, !communities.isEmpty {
                 let eventCommunityTitles = Set(event.communities.map { $0.title.lowercased() })
@@ -79,74 +75,74 @@ public class EventsBusinessLogic {
                     return false
                 }
             }
-            
+
             // Has talks filter
             if let hasTalks = options.hasTalks {
-                if hasTalks && event.talks.isEmpty {
+                if hasTalks, event.talks.isEmpty {
                     return false
                 }
-                if !hasTalks && !event.talks.isEmpty {
+                if !hasTalks, !event.talks.isEmpty {
                     return false
                 }
             }
-            
+
             // Has images filter
             if let hasImages = options.hasImages {
-                if hasImages && event.images.isEmpty {
+                if hasImages, event.images.isEmpty {
                     return false
                 }
-                if !hasImages && !event.images.isEmpty {
+                if !hasImages, !event.images.isEmpty {
                     return false
                 }
             }
-            
+
             return true
         }
     }
-    
+
     // MARK: - Sorting
-    
+
     /// Sorts events based on the provided option
     public static func sortEvents(_ events: [Event], by option: EventSortOption) -> [Event] {
-        return events.sorted { event1, event2 in
+        events.sorted { event1, event2 in
             switch option {
             case .titleAscending:
-                return event1.title.localizedCaseInsensitiveCompare(event2.title) == .orderedAscending
-                
+                event1.title.localizedCaseInsensitiveCompare(event2.title) == .orderedAscending
+
             case .titleDescending:
-                return event1.title.localizedCaseInsensitiveCompare(event2.title) == .orderedDescending
-                
+                event1.title.localizedCaseInsensitiveCompare(event2.title) == .orderedDescending
+
             case .communityCountAscending:
-                return event1.communities.count < event2.communities.count
-                
+                event1.communities.count < event2.communities.count
+
             case .communityCountDescending:
-                return event1.communities.count > event2.communities.count
-                
+                event1.communities.count > event2.communities.count
+
             case .talkCountAscending:
-                return event1.talks.count < event2.talks.count
-                
+                event1.talks.count < event2.talks.count
+
             case .talkCountDescending:
-                return event1.talks.count > event2.talks.count
+                event1.talks.count > event2.talks.count
             }
         }
     }
-    
+
     // MARK: - Analytics and Insights
-    
+
     /// Gets unique tags from all events
     public static func getUniqueTags(from events: [Event]) -> [Tag] {
-        let allTags = events.flatMap { $0.tags }
+        let allTags = events.flatMap(\.tags)
         let uniqueTags = Dictionary(grouping: allTags) { $0.id }
         return Array(uniqueTags.values.map { $0.first! })
     }
-    
+
     /// Gets unique communities from all events
     public static func getUniqueCommunities(from events: [Event]) -> [Community] {
-        let allCommunities = events.flatMap { $0.communities }
+        let allCommunities = events.flatMap(\.communities)
         let uniqueCommunities = Dictionary(grouping: allCommunities) { $0.id }
         return Array(uniqueCommunities.values.map { $0.first! })
     }
-    
+
     /// Gets events statistics
     public static func getEventsStatistics(from events: [Event]) -> EventsStatistics {
         let totalEvents = events.count
@@ -154,7 +150,7 @@ public class EventsBusinessLogic {
         let totalCommunities = events.reduce(0) { $0 + $1.communities.count }
         let eventsWithImages = events.filter { !$0.images.isEmpty }.count
         let eventsWithTalks = events.filter { !$0.talks.isEmpty }.count
-        
+
         return EventsStatistics(
             totalEvents: totalEvents,
             totalTalks: totalTalks,
@@ -166,30 +162,39 @@ public class EventsBusinessLogic {
 }
 
 // MARK: - Events Statistics
+
 public struct EventsStatistics: Sendable {
     public let totalEvents: Int
     public let totalTalks: Int
     public let totalCommunities: Int
     public let eventsWithImages: Int
     public let eventsWithTalks: Int
-    
+
     public var averageTalksPerEvent: Double {
-        guard totalEvents > 0 else { return 0 }
+        guard totalEvents > 0 else {
+            return 0
+        }
         return Double(totalTalks) / Double(totalEvents)
     }
-    
+
     public var averageCommunitiesPerEvent: Double {
-        guard totalEvents > 0 else { return 0 }
+        guard totalEvents > 0 else {
+            return 0
+        }
         return Double(totalCommunities) / Double(totalEvents)
     }
-    
+
     public var eventsWithImagesPercentage: Double {
-        guard totalEvents > 0 else { return 0 }
+        guard totalEvents > 0 else {
+            return 0
+        }
         return (Double(eventsWithImages) / Double(totalEvents)) * 100
     }
-    
+
     public var eventsWithTalksPercentage: Double {
-        guard totalEvents > 0 else { return 0 }
+        guard totalEvents > 0 else {
+            return 0
+        }
         return (Double(eventsWithTalks) / Double(totalEvents)) * 100
     }
-} 
+}

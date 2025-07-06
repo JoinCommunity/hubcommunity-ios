@@ -1,10 +1,3 @@
-//
-//  Hub_CommunityApp.swift
-//  Hub Community
-//
-//  Created by Zé Net on 06/07/2025.
-//
-
 import SwiftUI
 
 @main

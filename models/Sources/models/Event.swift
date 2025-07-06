@@ -1,10 +1,3 @@
-//
-//  Event.swift
-//  models
-//
-//  Created by Zé Net on 06/07/2025.
-//
-
 import Foundation
 
 public struct Event: Codable, Identifiable, Sendable {
@@ -15,7 +8,7 @@ public struct Event: Codable, Identifiable, Sendable {
     public let location: Location
     public let images: [String]
     public let communities: [Community]
-    
+
     public init(
         id: String,
         title: String,
@@ -33,4 +26,4 @@ public struct Event: Codable, Identifiable, Sendable {
         self.images = images
         self.communities = communities
     }
-} 
+}

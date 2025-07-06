@@ -1,16 +1,9 @@
-//
-//  EventsListView.swift
-//  Hub Commnity
-//
-//  Created by Zé Net on 06/07/2025.
-//
-
-import SwiftUI
 import models
+import SwiftUI
 
 struct EventsListView: View {
     @StateObject private var viewModel = EventsListViewModel()
-    
+
     var body: some View {
         NavigationView {
             Group {
@@ -78,4 +71,4 @@ struct EventsListView: View {
 
 #Preview {
     EventsListView()
-} 
+}

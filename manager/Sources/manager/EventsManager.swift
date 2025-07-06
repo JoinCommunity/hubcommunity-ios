@@ -1,16 +1,10 @@
-//
-//  EventsManager.swift
-//  manager
-//
-//  Created by Zé Net on 06/07/2025.
-//
-
-import Foundation
 import api
+import Foundation
 import models
 import storage
 
 // MARK: - Events Manager Protocol
+
 public protocol EventsManagerProtocol: Sendable {
     func fetchEvents() async throws -> [Event]
     func fetchEventsWithCache() async throws -> [Event]
@@ -20,10 +14,11 @@ public protocol EventsManagerProtocol: Sendable {
 }
 
 // MARK: - Events Manager Implementation
+
 public class EventsManager: EventsManagerProtocol, @unchecked Sendable {
     private let eventsService: EventsServiceProtocol
     private let storageService: StorageServiceProtocol
-    
+
     public init(
         eventsService: EventsServiceProtocol = EventsService(),
         storageService: StorageServiceProtocol = StorageService()
@@ -31,14 +26,14 @@ public class EventsManager: EventsManagerProtocol, @unchecked Sendable {
         self.eventsService = eventsService
         self.storageService = storageService
     }
-    
+
     // MARK: - Public Methods
-    
+
     /// Fetches events directly from the API without caching
     public func fetchEvents() async throws -> [Event] {
-        return try await eventsService.getEvents()
+        try await eventsService.getEvents()
     }
-    
+
     /// Fetches events with cache-first strategy
     public func fetchEventsWithCache() async throws -> [Event] {
         // First, try to get cached events
@@ -46,45 +41,46 @@ public class EventsManager: EventsManagerProtocol, @unchecked Sendable {
             // Return cached events immediately
             return cachedEvents
         }
-        
+
         // If no cache or empty cache, fetch from API
         let events = try await fetchEvents()
-        
+
         // Cache the fetched events
         try await cacheEvents(events)
-        
+
         return events
     }
-    
+
     /// Refreshes events from API and updates cache
     public func refreshEvents() async throws -> [Event] {
         // Fetch fresh data from API
         let events = try await fetchEvents()
-        
+
         // Update cache with fresh data
         try await cacheEvents(events)
-        
+
         return events
     }
-    
+
     /// Gets cached events from storage
     public func getCachedEvents() async throws -> [Event] {
-        return try await storageService.getEvents()
+        try await storageService.getEvents()
     }
-    
+
     /// Clears the events cache
     public func clearCache() async throws {
         try await storageService.clearEvents()
     }
-    
+
     // MARK: - Private Methods
-    
+
     private func cacheEvents(_ events: [Event]) async throws {
         try await storageService.saveEvents(events)
     }
 }
 
 // MARK: - Manager Factory
+
 public class EventsManagerFactory {
     public static func createManager(
         baseURL: URL = URL(string: "https://hubcommunity-bff.8020digital.com.br/graphql")!
@@ -93,7 +89,7 @@ public class EventsManagerFactory {
         let storageService = StorageService()
         return EventsManager(eventsService: eventsService, storageService: storageService)
     }
-    
+
     public static func createMockManager(
         mockEvents: [Event] = [],
         shouldThrowError: Bool = false,
@@ -107,4 +103,4 @@ public class EventsManagerFactory {
         let mockStorageService = MockStorageService()
         return EventsManager(eventsService: mockEventsService, storageService: mockStorageService)
     }
-} 
+}

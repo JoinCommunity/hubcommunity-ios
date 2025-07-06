@@ -1,12 +1,5 @@
-//
-//  Hub_CommunityTests.swift
-//  Hub CommunityTests
-//
-//  Created by Zé Net on 06/07/2025.
-//
-
-import Testing
 @testable import Hub_Community
+import Testing
 
 struct Hub_CommunityTests {
 

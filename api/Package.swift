@@ -10,10 +10,12 @@ let package = Package(
         .macOS(.v12)
     ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
+        // Products define the executables and libraries a package produces, making them visible to other
+        // packages.
         .library(
             name: "api",
-            targets: ["api"]),
+            targets: ["api"]
+        )
     ],
     dependencies: [
         .package(path: "../models")
@@ -25,14 +27,11 @@ let package = Package(
             name: "api",
             dependencies: [
                 "models"
-            ],
-            resources: [
-                .process("schema.graphqls"),
-                .process("EventsQuery.graphql")
-            ]),
+            ]
+        ),
         .testTarget(
             name: "apiTests",
             dependencies: ["api"]
-        ),
+        )
     ]
 )

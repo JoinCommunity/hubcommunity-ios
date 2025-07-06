@@ -1,11 +1,11 @@
-import XCTest
-@testable import manager
 import api
+@testable import manager
 import models
 import storage
+import XCTest
 
 final class EventsManagerTests: XCTestCase {
-    
+
     func testFetchEvents() async throws {
         // Given
         let mockEvents = [
@@ -19,20 +19,20 @@ final class EventsManagerTests: XCTestCase {
                 communities: [Community(id: "1", title: "Test Community", membersQuantity: 100)]
             )
         ]
-        
+
         let mockService = EventsServiceFactory.createMockService(mockEvents: mockEvents)
         let mockStorage = MockStorageService()
         let manager = EventsManager(eventsService: mockService, storageService: mockStorage)
-        
+
         // When
         let result = try await manager.fetchEvents()
-        
+
         // Then
         XCTAssertEqual(result.count, 1)
         XCTAssertEqual(result.first?.id, "1")
         XCTAssertEqual(result.first?.title, "Test Event")
     }
-    
+
     func testFetchEventsWithCache() async throws {
         // Given
         let mockEvents = [
@@ -46,21 +46,21 @@ final class EventsManagerTests: XCTestCase {
                 communities: []
             )
         ]
-        
+
         let mockService = EventsServiceFactory.createMockService(mockEvents: mockEvents)
         let mockStorage = MockStorageService()
         mockStorage.mockEvents = mockEvents
-        
+
         let manager = EventsManager(eventsService: mockService, storageService: mockStorage)
-        
+
         // When
         let result = try await manager.fetchEventsWithCache()
-        
+
         // Then
         XCTAssertEqual(result.count, 1)
         XCTAssertEqual(result.first?.id, "1")
     }
-    
+
     func testRefreshEvents() async throws {
         // Given
         let mockEvents = [
@@ -74,19 +74,19 @@ final class EventsManagerTests: XCTestCase {
                 communities: []
             )
         ]
-        
+
         let mockService = EventsServiceFactory.createMockService(mockEvents: mockEvents)
         let mockStorage = MockStorageService()
         let manager = EventsManager(eventsService: mockService, storageService: mockStorage)
-        
+
         // When
         let result = try await manager.refreshEvents()
-        
+
         // Then
         XCTAssertEqual(result.count, 1)
         XCTAssertEqual(result.first?.title, "Refreshed Event")
     }
-    
+
     func testGetCachedEvents() async throws {
         // Given
         let mockEvents = [
@@ -100,24 +100,24 @@ final class EventsManagerTests: XCTestCase {
                 communities: []
             )
         ]
-        
+
         let mockStorage = MockStorageService()
         mockStorage.mockEvents = mockEvents
         let manager = EventsManager(storageService: mockStorage)
-        
+
         // When
         let result = try await manager.getCachedEvents()
-        
+
         // Then
         XCTAssertEqual(result.count, 1)
         XCTAssertEqual(result.first?.title, "Cached Event")
     }
-    
+
     func testClearCache() async throws {
         // Given
         let mockStorage = MockStorageService()
         let manager = EventsManager(storageService: mockStorage)
-        
+
         // When & Then
         do {
             try await manager.clearCache()
@@ -126,19 +126,19 @@ final class EventsManagerTests: XCTestCase {
             XCTFail("clearCache should not throw: \(error)")
         }
     }
-    
+
     func testManagerFactoryCreatesManager() {
         // Given
         let url = URL(string: "https://test.com/graphql")!
-        
+
         // When
         let manager = EventsManagerFactory.createManager(baseURL: url)
-        
+
         // Then
         XCTAssertNotNil(manager)
         XCTAssertTrue(manager is EventsManager)
     }
-    
+
     func testManagerFactoryCreatesMockManager() {
         // Given
         let mockEvents = [
@@ -152,12 +152,12 @@ final class EventsManagerTests: XCTestCase {
                 communities: []
             )
         ]
-        
+
         // When
         let manager = EventsManagerFactory.createMockManager(mockEvents: mockEvents)
-        
+
         // Then
         XCTAssertNotNil(manager)
         XCTAssertTrue(manager is EventsManager)
     }
-} 
+}
