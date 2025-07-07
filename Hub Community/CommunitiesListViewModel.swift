@@ -3,19 +3,19 @@ import manager
 import models
 
 @MainActor
-public class EventsListViewModel: ObservableObject {
-    @Published public private(set) var events: [Event] = []
+public class CommunitiesListViewModel: ObservableObject {
+    @Published public private(set) var communities: [Community] = []
     @Published public private(set) var isLoading: Bool = false
-    @Published public private(set) var errorMessage: String? = nil
     @Published public var isFirstLoading: Bool = true
+    @Published public private(set) var errorMessage: String? = nil
 
-    private let manager: EventsManagerProtocol
+    private let manager: CommunitiesManagerProtocol
 
-    public init(manager: EventsManagerProtocol = EventsManager()) {
+    public init(manager: CommunitiesManagerProtocol = CommunitiesManager()) {
         self.manager = manager
     }
 
-    public func loadEvents() async {
+    public func loadCommunities() async {
         guard isFirstLoading else {
             return
         }
@@ -23,8 +23,8 @@ public class EventsListViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
         do {
-            events = try await manager.fetchEvents()
-            // events = try await manager.refreshEvents()
+            communities = try await manager.fetchCommunities()
+            // communities = try await manager.refreshCommunities()
             isFirstLoading = false
         } catch {
             errorMessage = error.localizedDescription

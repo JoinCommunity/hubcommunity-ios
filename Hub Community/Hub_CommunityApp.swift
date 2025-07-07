@@ -7,9 +7,24 @@ struct Hub_CommunityApp: App {
         loadRocketSimConnect()
     }
 
+    private let eventsViewModel = EventsListViewModel()
+    private let communitiesViewModel = CommunitiesListViewModel()
+
     var body: some Scene {
         WindowGroup {
-            EventsListView()
+            TabView {
+                EventsListView()
+                    .environmentObject(eventsViewModel)
+                    .tabItem {
+                        Label("Events", systemImage: "calendar")
+                    }
+
+                CommunitiesListView()
+                    .environmentObject(communitiesViewModel)
+                    .tabItem {
+                        Label("Communities", systemImage: "person.3")
+                    }
+            }
         }
     }
 

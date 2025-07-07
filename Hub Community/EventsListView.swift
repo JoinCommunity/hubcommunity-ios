@@ -2,7 +2,7 @@ import models
 import SwiftUI
 
 struct EventsListView: View {
-    @StateObject private var viewModel = EventsListViewModel()
+    @EnvironmentObject private var viewModel: EventsListViewModel
 
     var body: some View {
         NavigationView {
@@ -63,8 +63,9 @@ struct EventsListView: View {
             }
             .navigationTitle("Events")
             .task {
-                await viewModel.loadEvents()
-                await viewModel.refreshEvents()
+                if viewModel.isFirstLoading {
+                    await viewModel.loadEvents()
+                }
             }
         }
     }
@@ -72,4 +73,5 @@ struct EventsListView: View {
 
 #Preview {
     EventsListView()
+        .environmentObject(EventsListViewModel())
 }
