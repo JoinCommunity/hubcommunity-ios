@@ -21,4 +21,4 @@ public enum TalkMapper {
         }
         return dtos.compactMap { map($0) }
     }
-} 
+}

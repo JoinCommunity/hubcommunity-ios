@@ -14,4 +14,4 @@ public enum LocationMapper {
 
         return Location(id: id, title: title)
     }
-} 
+}

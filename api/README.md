@@ -190,4 +190,97 @@ The package follows a clean architecture pattern:
 
 - iOS 15.0+ / macOS 12.0+
 - Swift 6.1+
-- Apollo iOS 1.0.0+ 
+- Apollo iOS 1.0.0+
+
+## Communities Service
+
+```swift
+import api
+
+// Create a service
+let communitiesService = CommunitiesServiceFactory.createService()
+
+// Fetch communities
+do {
+    let communities = try await communitiesService.getCommunities()
+    print("Found \(communities.count) communities")
+    
+    for community in communities {
+        print("Community: \(community.title ?? "Unknown")")
+        print("Members: \(community.membersQuantity ?? 0)")
+        print("Description: \(community.shortDescription ?? "No description")")
+        print("Tags: \(community.tags?.map { $0.value ?? "" }.joined(separator: ", ") ?? "No tags")")
+    }
+} catch {
+    print("Error fetching communities: \(error)")
+}
+```
+
+### Testing
+
+```swift
+// Create a mock service for testing
+let mockCommunities = [
+    CommunityDto(
+        id: "1",
+        title: "Test Community",
+        images: ["image1.jpg"],
+        membersQuantity: 100,
+        shortDescription: "Test Description",
+        tags: [TagDto(id: "1", value: "Swift")]
+    )
+]
+
+let mockService = CommunitiesServiceFactory.createMockService(mockCommunities: mockCommunities)
+```
+
+## GraphQL Queries
+
+### Events Query
+```graphql
+query Events {
+  events {
+    data {
+      id
+      title
+      tags {
+        value
+        id
+      }
+      talks {
+        id
+        title
+      }
+      location {
+        id
+        title
+      }
+      images
+      communities {
+        id
+        title
+        members_quantity
+      }
+    }
+  }
+}
+```
+
+### Communities Query
+```graphql
+query Data {
+  communities {
+    data {
+      id
+      title
+      images
+      members_quantity
+      short_description
+      tags {
+        id
+        value
+      }
+    }
+  }
+}
+``` 

@@ -145,7 +145,14 @@ final class EventsMapperTests: XCTestCase {
 
     func testCommunityMapperWithValidDto() {
         // Given
-        let communityDto = CommunityDto(id: "1", title: "iOS Developers", membersQuantity: 150)
+        let communityDto = CommunityDto(
+            id: "1",
+            title: "iOS Developers",
+            images: nil,
+            membersQuantity: 150,
+            shortDescription: nil,
+            tags: nil
+        )
 
         // When
         let result = CommunityMapper.map(communityDto)
@@ -171,8 +178,22 @@ final class EventsMapperTests: XCTestCase {
     func testCommunityMapperArrayWithValidDtos() {
         // Given
         let communityDtos = [
-            CommunityDto(id: "1", title: "Community 1", membersQuantity: 100),
-            CommunityDto(id: "2", title: "Community 2", membersQuantity: 200)
+            CommunityDto(
+                id: "1",
+                title: "Community 1",
+                images: nil,
+                membersQuantity: 100,
+                shortDescription: nil,
+                tags: nil
+            ),
+            CommunityDto(
+                id: "2",
+                title: "Community 2",
+                images: nil,
+                membersQuantity: 200,
+                shortDescription: nil,
+                tags: nil
+            )
         ]
 
         // When
@@ -199,7 +220,14 @@ final class EventsMapperTests: XCTestCase {
             talks: [TalkDto(id: "1", title: "Keynote")],
             location: LocationDto(id: "1", title: "San Jose"),
             images: ["image1.jpg", "image2.jpg"],
-            communities: [CommunityDto(id: "1", title: "Apple Developers", membersQuantity: 1000)]
+            communities: [CommunityDto(
+                id: "1",
+                title: "Apple Developers",
+                images: nil,
+                membersQuantity: 1000,
+                shortDescription: nil,
+                tags: nil
+            )]
         )
 
         // When

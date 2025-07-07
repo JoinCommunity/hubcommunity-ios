@@ -22,4 +22,4 @@ public enum CommunityMapper {
         }
         return dtos.compactMap { map($0) }
     }
-} 
+}

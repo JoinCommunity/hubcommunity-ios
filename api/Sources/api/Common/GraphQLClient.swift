@@ -57,15 +57,18 @@ public class GraphQLClient: GraphQLClientProtocol, @unchecked Sendable {
 
 public class MockGraphQLClient: GraphQLClientProtocol, @unchecked Sendable {
     private let mockEvents: [EventDto]
+    private let mockCommunities: [CommunityDto]
     private let shouldThrowError: Bool
     private let mockError: Error
 
     public init(
         mockEvents: [EventDto] = [],
+        mockCommunities: [CommunityDto] = [],
         shouldThrowError: Bool = false,
         mockError: Error = GraphQLError.noData
     ) {
         self.mockEvents = mockEvents
+        self.mockCommunities = mockCommunities
         self.shouldThrowError = shouldThrowError
         self.mockError = mockError
     }
@@ -78,6 +81,12 @@ public class MockGraphQLClient: GraphQLClientProtocol, @unchecked Sendable {
         if T.self == EventsQueryDto.self {
             let mockResponse = EventsQueryDto(
                 events: EventsDto(data: mockEvents)
+            )
+            return mockResponse as! T
+        }
+        if T.self == CommunitiesQueryDto.self {
+            let mockResponse = CommunitiesQueryDto(
+                communities: CommunitiesDto(data: mockCommunities)
             )
             return mockResponse as! T
         }

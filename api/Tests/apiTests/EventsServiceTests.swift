@@ -13,7 +13,14 @@ final class EventsServiceTests: XCTestCase {
                 talks: [TalkDto(id: "1", title: "Test Talk")],
                 location: LocationDto(id: "1", title: "Test Location"),
                 images: ["image1.jpg"],
-                communities: [CommunityDto(id: "1", title: "Test Community", membersQuantity: 100)]
+                communities: [CommunityDto(
+                    id: "1",
+                    title: "Test Community",
+                    images: [],
+                    membersQuantity: 100,
+                    shortDescription: "Test",
+                    tags: []
+                )]
             )
         ]
 

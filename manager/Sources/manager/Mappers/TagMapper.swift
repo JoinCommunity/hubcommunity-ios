@@ -21,4 +21,4 @@ public enum TagMapper {
         }
         return dtos.compactMap { map($0) }
     }
-} 
+}

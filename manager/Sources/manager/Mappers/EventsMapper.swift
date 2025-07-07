@@ -43,4 +43,4 @@ public enum EventsMapper {
         let events = map(dto.data)
         return EventsResponse(data: events)
     }
-} 
+}

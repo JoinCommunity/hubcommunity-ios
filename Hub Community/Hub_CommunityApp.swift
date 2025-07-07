@@ -3,7 +3,7 @@ import SwiftUI
 @main
 struct Hub_CommunityApp: App {
 
-    init () {
+    init() {
         loadRocketSimConnect()
     }
 
@@ -15,7 +15,7 @@ struct Hub_CommunityApp: App {
 
     private func loadRocketSimConnect() {
         #if DEBUG
-        guard (Bundle(path: "/Applications/RocketSim.app/Contents/Frameworks/RocketSimConnectLinker.nocache.framework")?.load() == true) else {
+        guard Bundle(path: "/Applications/RocketSim.app/Contents/Frameworks/RocketSimConnectLinker.nocache.framework")?.load() == true else {
             print("Failed to load linker framework")
             return
         }
