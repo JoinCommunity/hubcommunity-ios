@@ -79,29 +79,3 @@ public class EventsManager: EventsManagerProtocol, @unchecked Sendable {
         try await storageService.saveEvents(events)
     }
 }
-
-// MARK: - Manager Factory
-
-public class EventsManagerFactory {
-    public static func createManager(
-        baseURL: URL = URL(string: "https://hubcommunity-bff.8020digital.com.br/graphql")!
-    ) -> EventsManagerProtocol {
-        let eventsService = EventsServiceFactory.createService(baseURL: baseURL)
-        let storageService = StorageService()
-        return EventsManager(eventsService: eventsService, storageService: storageService)
-    }
-
-//    public static func createMockManager(
-//        mockEvents: [Event] = [],
-//        shouldThrowError: Bool = false,
-//        mockError: Error = GraphQLError.noData
-//    ) -> EventsManagerProtocol {
-//        let mockEventsService = EventsServiceFactory.createMockService(
-//            mockEvents: mockEvents,
-//            shouldThrowError: shouldThrowError,
-//            mockError: mockError
-//        )
-//        let mockStorageService = MockStorageService()
-//        return EventsManager(eventsService: mockEventsService, storageService: mockStorageService)
-//    }
-}
