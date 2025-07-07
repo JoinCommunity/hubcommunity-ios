@@ -27,6 +27,7 @@ public class EventsListViewModel: ObservableObject {
             // events = try await manager.refreshEvents()
             isFirstLoading = false
         } catch {
+            isFirstLoading = true
             errorMessage = error.localizedDescription
         }
         isLoading = false

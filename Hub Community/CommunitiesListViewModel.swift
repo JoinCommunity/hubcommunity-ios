@@ -27,6 +27,7 @@ public class CommunitiesListViewModel: ObservableObject {
             // communities = try await manager.refreshCommunities()
             isFirstLoading = false
         } catch {
+            isFirstLoading = true
             errorMessage = error.localizedDescription
         }
         isLoading = false
